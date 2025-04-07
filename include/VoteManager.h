@@ -14,9 +14,9 @@ private:
     Blockchain blockchain;
 
 public:
-    void registerVoter(const std::string& id, const std::string& name);
+    void registerVoter(const std::string& id, const std::string& name, const std::string& password);
     bool registerCandidate(const std::string& name);
-    void castVote(const std::string& voterID, int candidateIndex);
+    void castVote(const std::string& voterID, const std::string& password, int candidateIndex);
     void displayResults() const;
     void printBlockchain() const;
     void listCandidates() const;

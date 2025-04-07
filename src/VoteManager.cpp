@@ -1,21 +1,24 @@
 #include "../include/VoteManager.h"
 #include <iostream>
 
-void VoteManager::registerVoter(const std::string& id, const std::string& name) {
-    if (voters.find(id) == voters.end()) {
-        voters.emplace(id, Voter(id, name));  // ✅ No default constructor needed
-    }
+void VoteManager::registerVoter(const std::string& id, const std::string& name, const std::string& password) {
+    if (voters.find(id) == voters.end()) { 
+       voters.emplace(id, Voter(id, name, password)); 
+       std::cout << "Voter registered.\n"; 
+   } else { 
+       std::cout << "Voter ID already registered.\n"; 
+   } 
 }
 
-bool VoteManager::registerCandidate(const std::string& name) {
-    for (const auto& c : candidates) {
-        if (c.getName() == name) {
-            std::cout << "Candidate name already exists.\n";
-            return false;
-        }
-    }
-    candidates.push_back(Candidate(name));
-    return true;
+bool VoteManager::registerCandidate(const std::string& name) { 
+    for (const auto& c : candidates) { 
+        if (c.getName() == name) { 
+            std::cout << "Candidate already exists.\n"; return false; 
+        } 
+    } 
+    candidates.emplace_back(name); 
+    std::cout << "Candidate registered.\n"; 
+    return true; 
 }
 
 void VoteManager::listCandidates() const {
@@ -26,10 +29,15 @@ void VoteManager::listCandidates() const {
 }
 
 
-void VoteManager::castVote(const std::string& voterID, int candidateIndex) {
+void VoteManager::castVote(const std::string& voterID, const std::string& password, int candidateIndex) {
     auto it = voters.find(voterID);
     if (it == voters.end()) {
         std::cout << "Voter not registered.\n";
+        return;
+    }
+
+    if (!it->second.verifyPassword(password)) {
+        std::cout << "Authentication failed. Incorrect password.\n";
         return;
     }
 

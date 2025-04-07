@@ -37,7 +37,9 @@ int main() {
                 std::getline(std::cin, voterID);
                 std::cout << "Enter Voter Name: ";
                 std::getline(std::cin, voterName);
-                vm.registerVoter(voterID, voterName);
+                std::string password; std::cout << "Set Password: "; 
+                std::cin >> password;
+                vm.registerVoter(voterID, voterName,password);
                 std::cout << "Voter registered.\n";
                 break;
             }
@@ -50,15 +52,17 @@ int main() {
                 break;
             }
             case 3: {
-                std::string voterID;
+                std::string voterID, password;
                 int candidateIndex;
                 std::cout << "Enter Voter ID: ";
                 std::getline(std::cin, voterID);
+                std::cout << "Enter Password: "; 
+                std::cin >> password;
                 vm.listCandidates();
                 std::cout << "Enter candidate index (0-based): ";
                 std::cin >> candidateIndex;
                 std::cin.ignore();
-                vm.castVote(voterID, candidateIndex);
+                vm.castVote(voterID, password, candidateIndex);
                 break;
             }
             case 4:
