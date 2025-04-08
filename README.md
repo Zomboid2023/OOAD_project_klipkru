@@ -1,6 +1,7 @@
 # Blockchain based voting system:
-use g++ -Iinclude src/*.cpp main.cpp -o voting_app to run the code.
-# This code implements a simple blockchain-based voting system in C++.
+      to execute:
+            use g++ -Iinclude src/*.cpp main.cpp -o voting_app to run the code.
+//This code implements a simple blockchain-based voting system in C++.
 
 # note1 
 this code is basically simulating the blockchain in a bare sense: 
