@@ -1,6 +1,36 @@
 #include "../include/VoteManager.h"
 #include <iostream>
 
+
+// Constructor with admin initialization
+VoteManager::VoteManager() : admin(nullptr) {
+    // You can add an initial admin here or make this part configurable
+    admin = new Admin("admin", "admin123"); // Example admin with ID "admin" and password "admin123"
+}
+
+bool VoteManager::loginAdmin(const std::string& password) {
+    if (admin && admin->verifyPassword(password)) {
+        std::cout << "Admin login successful.\n";
+        return true;
+    }
+    std::cout << "Admin login failed.\n";
+    return false;
+}
+
+void VoteManager::showVotes() const {
+    std::cout << "\nCurrent Votes:\n";
+    for (const auto& candidate : candidates) {
+        std::cout << candidate.getName() << ": " << candidate.getVoteCount() << " votes\n";
+    }
+}
+
+void VoteManager::addNewCandidate(const std::string& name) {
+    registerCandidate(name);  // Reuse existing registerCandidate method
+}
+
+// Other methods remain unchanged
+
+
 void VoteManager::registerVoter(const std::string& id, const std::string& name, const std::string& password) {
     if (voters.find(id) == voters.end()) { 
        voters.emplace(id, Voter(id, name, password)); 
