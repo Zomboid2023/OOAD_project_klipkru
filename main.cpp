@@ -18,7 +18,8 @@ void displayAdminMenu() {
     std::cout << "\n===== Admin Menu =====\n";
     std::cout << "1. Show Votes\n";
     std::cout << "2. Add Candidate\n";
-    std::cout << "3. Exit Admin Mode\n";
+    std::cout << "3. View All Voters\n";  // ✅ New option
+    std::cout << "4. Exit Admin Mode\n";
     std::cout << "Enter your choice: ";
 }
 
@@ -98,7 +99,7 @@ int main() {
                         displayAdminMenu();
                         std::cin >> adminChoice;
                         std::cin.ignore(); // Clear the input buffer
-
+                
                         switch (adminChoice) {
                             case 1:
                                 vm.showVotes();
@@ -111,18 +112,20 @@ int main() {
                                 break;
                             }
                             case 3:
+                                vm.viewAllVoters();  // ✅ Show registered voters
+                                break;
+                            case 4:
                                 std::cout << "Exiting admin mode...\n";
                                 adminLoggedIn = false;
                                 break;
                             default:
                                 std::cout << "Invalid choice. Please try again.\n";
                         }
-
-                        if (!adminLoggedIn) {
-                            break; // Exit the loop when admin logs out
-                        }
+                
+                        if (!adminLoggedIn) break;
                     }
                 }
+                
                 break;
             }
             case 7:

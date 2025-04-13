@@ -28,6 +28,8 @@ public:
     // Admin-only functionality
     void showVotes() const;  // Show all votes for each candidate
     void addNewCandidate(const std::string& name); // Add candidate (only for admin)
+    void viewAllVoters() const;
+
 };
 
 #endif

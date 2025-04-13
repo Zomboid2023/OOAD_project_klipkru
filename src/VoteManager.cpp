@@ -17,6 +17,22 @@ bool VoteManager::loginAdmin(const std::string& password) {
     return false;
 }
 
+void VoteManager::viewAllVoters() const {
+    std::cout << "\nRegistered Voters:\n";
+    if (voters.empty()) {
+        std::cout << "No voters registered.\n";
+        return;
+    }
+
+    for (const auto& pair : voters) {
+        const Voter& voter = pair.second;
+        std::cout << "ID: " << voter.getID()
+                  << ", Name: " << voter.getName()
+                  << ", Has Voted: " << (voter.getHasVoted() ? "Yes" : "No") << "\n";
+    }
+}
+
+
 void VoteManager::showVotes() const {
     std::cout << "\nCurrent Votes:\n";
     for (const auto& candidate : candidates) {
