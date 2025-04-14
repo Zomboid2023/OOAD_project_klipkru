@@ -1,6 +1,8 @@
 #include <iostream>
 #include <limits>
 #include "include/VoteManager.h"
+#include <iostream>
+using namespace std;
 
 void displayMenu() {
     std::cout << "\n===== Blockchain Voting System =====\n";
@@ -23,9 +25,55 @@ void displayAdminMenu() {
     std::cout << "Enter your choice: ";
 }
 
-int main() {
+int main(int argc, char* argv[]) {
     VoteManager vm;
     vm.loadFromFile();
+
+    // cout<<argc<<endl;
+    // --- Command Line Interface Support ---
+    if (argc > 1) {
+        std::string command = argv[1];
+
+        if (command == "register_voter" && argc == 5) {
+            std::string voterID = argv[2];
+            std::string voterName = argv[3];
+            std::string password = argv[4];
+            vm.registerVoter(voterID, voterName, password);
+        }
+        else if (command == "register_candidate" && argc == 3) {
+            std::string name = argv[2];
+            vm.registerCandidate(name);
+        }
+        else if (command == "cast_vote" && argc == 5) {
+            std::string voterID = argv[2];
+            std::string password = argv[3];
+            int candidateIndex = std::stoi(argv[4]);
+            vm.castVote(voterID, password, candidateIndex);
+        }
+        else if (command == "view_results") {
+            vm.displayResults();
+        }
+        else if (command == "view_ledger") {
+            vm.printBlockchain();
+        }
+        else if (command == "login_admin" && argc == 3) {
+            std::string password = argv[2];
+            if (vm.loginAdmin(password)) {
+                std::cout << "Admin login successful.\n";
+            } else {
+                std::cout << "Admin login failed.\n";
+            }
+        }
+        else {
+            std::cout << "Invalid command or arguments.\n";
+            std::cout << "Example: voting_app.exe register_voter 101 Alice securepass\n";
+        }
+
+        vm.saveToFile();
+        return 0;
+    }
+
+    // --- Interactive Menu ---
     int choice;
     bool adminLoggedIn = false;
 
