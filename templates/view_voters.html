@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View All Voters</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .voters-container {
+            width: 80%;
+            max-width: 800px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>View All Voters</h1>
+</header>
+
+<div class="voters-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Voter ID</th>
+                <th>Voter Name</th>
+                <th>Has Voted</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if voters %}
+                {% for voter in voters %}
+                    <tr>
+                        <td>{{ voter.split(',')[0] }}</td>
+                        <td>{{ voter.split(',')[1] }}</td>
+                        <td>{{ voter.split(',')[2] }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">No voters found or error fetching voters.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <a href="/admin_dashboard">← Back to Dashboard</a>
+</div>
+
+</body>
+</html>

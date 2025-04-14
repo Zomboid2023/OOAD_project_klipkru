@@ -62,6 +62,9 @@ int main(int argc, char* argv[]) {
                 std::cout << "Candidate index out of range.\n";
             }
         }
+        else if (command == "view_voters") {
+            vm.viewAllVoters();
+        }
         else if (command == "view_results") {
             vm.displayResults();
         }

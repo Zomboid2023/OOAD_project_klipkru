@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blockchain Ledger</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .ledger-container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+            font-size: 15px;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Blockchain Ledger</h1>
+</header>
+
+<div class="ledger-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Index</th>
+                <th>Data</th>
+                <th>Hash</th>
+                <th>Previous Hash</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if ledger_entries %}
+                {% for block in ledger_entries %}
+                    <tr>
+                        <td>{{ block.index }}</td>
+                        <td>{{ block.data }}</td>
+                        <td>{{ block.hash }}</td>
+                        <td>{{ block.prevhash }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4">No ledger entries found.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <br>
+    <a href="/admin_dashboard">← Back to Dashboard</a>
+</div>
+
+</body>
+</html>
