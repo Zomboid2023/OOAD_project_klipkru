@@ -34,6 +34,8 @@ public:
 
     void saveToFile() const;
     void loadFromFile();
+
+    std::vector<std::string> getCandidatesNames() const;
 };
 
 #endif

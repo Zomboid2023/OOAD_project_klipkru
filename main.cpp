@@ -44,11 +44,23 @@ int main(int argc, char* argv[]) {
             std::string name = argv[2];
             vm.registerCandidate(name);
         }
+        else if (command == "list_candidates") {
+            vm.listCandidates(); // Make sure this function is defined in VoteManager
+        }        
         else if (command == "cast_vote" && argc == 5) {
             std::string voterID = argv[2];
             std::string password = argv[3];
-            int candidateIndex = std::stoi(argv[4]);
-            vm.castVote(voterID, password, candidateIndex);
+            std::string candidateIndexStr = argv[4];
+
+            try {
+                int candidateIndex = std::stoi(candidateIndexStr);
+                vm.castVote(voterID, password, candidateIndex);
+            } catch (const std::invalid_argument& e) {
+                std::cout << "Invalid candidate index: " << candidateIndexStr << std::endl;
+                std::cout << "Please enter a valid number for the candidate index.\n";
+            } catch (const std::out_of_range& e) {
+                std::cout << "Candidate index out of range.\n";
+            }
         }
         else if (command == "view_results") {
             vm.displayResults();

@@ -98,11 +98,15 @@ void VoteManager::printBlockchain() const {
 }
 
 void VoteManager::listCandidates() const {
-    std::cout << "\nAvailable Candidates:\n";
+    if (candidates.empty()) {
+        std::cout << "No candidates available.\n";
+        return;
+    }
     for (size_t i = 0; i < candidates.size(); ++i) {
-        std::cout << i << ": " << candidates[i].getName() << "\n";
+        std::cout << "ID: " << i << ", Name: " << candidates[i].getName() << "\n";
     }
 }
+
 
 void VoteManager::showVotes() const {
     std::cout << "\nCurrent Votes:\n";
@@ -164,3 +168,13 @@ void VoteManager::loadFromFile() {
     buffer << bfile.rdbuf();
     blockchain.deserialize(buffer.str());
 }
+
+
+std::vector<std::string> VoteManager::getCandidatesNames() const {
+    std::vector<std::string> candidateNames;
+    for (const auto& candidate : candidates) {
+        candidateNames.push_back(candidate.getName());
+    }
+    return candidateNames;
+}
+

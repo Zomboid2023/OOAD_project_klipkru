@@ -39,10 +39,31 @@ def register_voter():
 @app.route('/cast_vote', methods=['GET', 'POST'])
 def cast_vote():
     result = None
+    candidates = []
+
+    # Fetch candidates if the method is GET (when the page is loaded)
+    if request.method == 'GET':
+        try:
+            # Call the C++ executable to get candidates
+            process = subprocess.run(
+                ['voting_app.exe', 'list_candidates'],
+                capture_output=True,
+                text=True
+            )
+
+            candidates = process.stdout.strip().split('\n')  # Assuming one candidate per line
+            print(candidates)
+        except Exception as e:
+            candidates = [f"Error fetching candidates: {e}"]
+
+    # Handle form submission when the user casts their vote
     if request.method == 'POST':
         voter_id = request.form['voter_id']
         password = request.form['password']
         candidate = request.form['candidate']
+        candidate = int(candidate.split(",")[0].split(":")[1].strip())
+        candidate = str(candidate)
+        print(candidate)
 
         try:
             process = subprocess.run(
@@ -51,10 +72,11 @@ def cast_vote():
                 text=True
             )
             result = process.stdout.strip() or process.stderr.strip()
+            print(result)
         except Exception as e:
             result = f"An error occurred: {e}"
 
-    return render_template('cast_vote.html', result=result)
+    return render_template('cast_vote.html', result=result, candidates=candidates)
 
 if __name__ == '__main__':
     app.run(debug=True)
