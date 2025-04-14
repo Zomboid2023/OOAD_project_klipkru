@@ -6,18 +6,21 @@
 #include "Voter.h"
 #include "Candidate.h"
 #include "Blockchain.h"
-#include "Admin.h" // Include Admin header
+#include "Admin.h"
 
 class VoteManager {
 private:
     std::unordered_map<std::string, Voter> voters;
     std::vector<Candidate> candidates;
     Blockchain blockchain;
-    Admin* admin; // Admin object for checking if the current user is an admin
+    Admin* admin;
 
 public:
     VoteManager();
-    bool loginAdmin(const std::string& password); // Admin login function
+    ~VoteManager();  // Destructor to free Admin memory
+
+    bool loginAdmin(const std::string& password);
+
     void registerVoter(const std::string& id, const std::string& name, const std::string& password);
     bool registerCandidate(const std::string& name);
     void castVote(const std::string& voterID, const std::string& password, int candidateIndex);
@@ -25,11 +28,12 @@ public:
     void printBlockchain() const;
     void listCandidates() const;
 
-    // Admin-only functionality
-    void showVotes() const;  // Show all votes for each candidate
-    void addNewCandidate(const std::string& name); // Add candidate (only for admin)
+    void showVotes() const;
+    void addNewCandidate(const std::string& name);
     void viewAllVoters() const;
 
+    void saveToFile() const;
+    void loadFromFile();
 };
 
 #endif

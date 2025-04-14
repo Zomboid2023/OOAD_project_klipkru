@@ -12,6 +12,8 @@ public:
 
     Block(int idx, const std::string& data, const std::string& prevHash);
     std::string calculateHash() const;
+    Block(int idx, const std::string& data, const std::string& prevHash, const std::string& hash); // new constructor
+
 };
 
 #endif

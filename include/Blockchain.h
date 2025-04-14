@@ -13,6 +13,9 @@ public:
     void addBlock(const std::string& data);
     const std::vector<Block>& getChain() const;
     bool isValid() const;
+
+    std::string serialize() const;
+    void deserialize(const std::string& data);
 };
 
 #endif

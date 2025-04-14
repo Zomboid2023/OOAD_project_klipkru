@@ -1,0 +1,3 @@
+0|Genesis Block|2568948821|0
+1|Voter ID: 1 voted for c1|29490309|2568948821
+2|Voter ID: 3 voted for c1|532799636|29490309

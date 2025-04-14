@@ -18,13 +18,14 @@ void displayAdminMenu() {
     std::cout << "\n===== Admin Menu =====\n";
     std::cout << "1. Show Votes\n";
     std::cout << "2. Add Candidate\n";
-    std::cout << "3. View All Voters\n";  // ✅ New option
+    std::cout << "3. View All Voters\n";
     std::cout << "4. Exit Admin Mode\n";
     std::cout << "Enter your choice: ";
 }
 
 int main() {
     VoteManager vm;
+    vm.loadFromFile();
     int choice;
     bool adminLoggedIn = false;
 
@@ -43,24 +44,22 @@ int main() {
 
         switch (choice) {
             case 1: {
-                std::string voterID, voterName;
+                std::string voterID, voterName, password;
                 std::cout << "Enter Voter ID: ";
                 std::getline(std::cin, voterID);
                 std::cout << "Enter Voter Name: ";
                 std::getline(std::cin, voterName);
-                std::string password;
-                std::cout << "Set Password: "; 
+                std::cout << "Set Password: ";
                 std::cin >> password;
+                std::cin.ignore();
                 vm.registerVoter(voterID, voterName, password);
-                std::cout << "Voter registered.\n";
                 break;
             }
             case 2: {
                 std::string name;
                 std::cout << "Enter Candidate Name: ";
                 std::getline(std::cin, name);
-                if (vm.registerCandidate(name))
-                    std::cout << "Candidate registered.\n";
+                vm.registerCandidate(name);
                 break;
             }
             case 3: {
@@ -68,8 +67,9 @@ int main() {
                 int candidateIndex;
                 std::cout << "Enter Voter ID: ";
                 std::getline(std::cin, voterID);
-                std::cout << "Enter Password: "; 
+                std::cout << "Enter Password: ";
                 std::cin >> password;
+                std::cin.ignore();
                 vm.listCandidates();
                 std::cout << "Enter candidate index (0-based): ";
                 std::cin >> candidateIndex;
@@ -88,18 +88,17 @@ int main() {
                     std::string adminPassword;
                     std::cout << "Enter Admin Password: ";
                     std::cin >> adminPassword;
-                    std::cin.ignore(); // Clear the input buffer
+                    std::cin.ignore();
                     adminLoggedIn = vm.loginAdmin(adminPassword);
                 }
 
-                // If admin is logged in
                 if (adminLoggedIn) {
                     int adminChoice;
                     while (true) {
                         displayAdminMenu();
                         std::cin >> adminChoice;
-                        std::cin.ignore(); // Clear the input buffer
-                
+                        std::cin.ignore();
+
                         switch (adminChoice) {
                             case 1:
                                 vm.showVotes();
@@ -112,7 +111,7 @@ int main() {
                                 break;
                             }
                             case 3:
-                                vm.viewAllVoters();  // ✅ Show registered voters
+                                vm.viewAllVoters();
                                 break;
                             case 4:
                                 std::cout << "Exiting admin mode...\n";
@@ -121,14 +120,14 @@ int main() {
                             default:
                                 std::cout << "Invalid choice. Please try again.\n";
                         }
-                
+
                         if (!adminLoggedIn) break;
                     }
                 }
-                
                 break;
             }
             case 7:
+                vm.saveToFile();
                 std::cout << "Exiting...\n";
                 return 0;
             default:
